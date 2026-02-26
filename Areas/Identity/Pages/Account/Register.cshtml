@@ -1,0 +1,102 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+<style>
+    .register-hero {
+        background: linear-gradient(90deg, #f4f8ff, #e9f3ff);
+        border-radius: 12px;
+        padding: 1.5rem;
+    }
+
+    .register-card {
+        border: 1px solid #dce7f8;
+        border-radius: 12px;
+        padding: 1.25rem;
+        background: #fff;
+    }
+
+    .register-hint {
+        font-size: 0.9rem;
+        color: #5b6b84;
+    }
+</style>
+
+<section class="register-hero mb-4">
+    <h1 class="mb-2">@ViewData["Title"]</h1>
+    <p class="mb-0">Create your LearnHub member account to save bookmarks and manage your learning activities.</p>
+</section>
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="register-card">
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" novalidate>
+                <h2 class="h4">New member registration</h2>
+                <p class="register-hint mb-3">All fields are required. Password must be at least 8 characters.</p>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.Email" class="form-label"></label>
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Enter a strong password" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Re-enter your password" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <button id="registerSubmit" type="submit" class="w-100 btn btn-primary">Create account</button>
+                <p class="register-hint mt-3 mb-0">
+                    Already have an account?
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Log in here</a>.
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <section class="register-card h-100">
+            <h3 class="h5">Why register?</h3>
+            <ul class="mb-3">
+                <li>Save and manage your bookmarks.</li>
+                <li>Access member-only learning activity pages.</li>
+                <li>Track your learning progress in one place.</li>
+            </ul>
+            <img
+                src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=80"
+                class="img-fluid rounded"
+                alt="Students learning with laptops" />
+            <p class="register-hint mt-2 mb-0">LearnHub supports better self-paced learning with structured resources.</p>
+        </section>
+    </div>
+</div>
+
+@* External login section kept only if providers are configured. *@
+@if ((Model.ExternalLogins?.Count ?? 0) > 0)
+{
+    <section class="mt-4">
+        <h3 class="h5">Use another service to register</h3>
+        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div>
+                @foreach (var provider in Model.ExternalLogins!)
+                {
+                    <button type="submit" class="btn btn-outline-primary me-2 mb-2" name="provider" value="@provider.Name" title="Register using your @provider.DisplayName account">@provider.DisplayName</button>
+                }
+            </div>
+        </form>
+    </section>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

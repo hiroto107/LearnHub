@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Member Dashboard";
+}
+
+<h1>Member Dashboard</h1>
+<p>Welcome! You are logged in and can manage your learning activity.</p>
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="h5">My Activity</h2>
+        <p>Bookmarks: <strong>@ViewData["BookmarkCount"]</strong></p>
+        <a asp-action="Bookmarks" class="btn btn-primary">View My Bookmarks</a>
+    </div>
+</div>

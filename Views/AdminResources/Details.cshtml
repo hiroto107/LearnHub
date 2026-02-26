@@ -1,0 +1,29 @@
+@model LearnHub.Models.Resource
+@{
+    ViewData["Title"] = "Resource Details";
+}
+
+<h1>Resource Details</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Title</dt>
+    <dd class="col-sm-9">@Model.Title</dd>
+
+    <dt class="col-sm-3">Description</dt>
+    <dd class="col-sm-9">@Model.Description</dd>
+
+    <dt class="col-sm-3">URL</dt>
+    <dd class="col-sm-9"><a href="@Model.Url" target="_blank" rel="noopener noreferrer">@Model.Url</a></dd>
+
+    <dt class="col-sm-3">Media Type</dt>
+    <dd class="col-sm-9">@Model.MediaType</dd>
+
+    <dt class="col-sm-3">Category</dt>
+    <dd class="col-sm-9">@Model.Category?.Name</dd>
+
+    <dt class="col-sm-3">Level</dt>
+    <dd class="col-sm-9">@Model.Level</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+<a asp-action="Index" class="btn btn-outline-secondary">Back</a>

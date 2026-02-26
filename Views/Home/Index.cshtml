@@ -1,0 +1,52 @@
+@model IEnumerable<LearnHub.Models.Resource>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<style>
+    .hero-section {
+        background: linear-gradient(90deg, #f4f8ff, #e9f3ff);
+        border-radius: 12px;
+        padding: 2rem;
+    }
+</style>
+
+<section class="hero-section mb-4">
+    <h1 class="display-5">Welcome to LearnHub</h1>
+    <p class="lead">Discover quality learning resources, track your progress, and manage content through role-based access.</p>
+    <a class="btn btn-primary" asp-controller="Resources" asp-action="Index">Browse Resources</a>
+</section>
+
+<section class="mb-4">
+    <h2>Featured Learning Video</h2>
+    <div class="ratio ratio-16x9">
+        <iframe src="https://www.youtube.com/embed/fzB2n3fS5xw" title="Learning Video" allowfullscreen></iframe>
+    </div>
+</section>
+
+<section>
+    <h2>Latest Resources</h2>
+    @if (!Model.Any())
+    {
+        <p style="color:#0b5ed7;">No resources yet. Sign in as admin to add content.</p>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var item in Model)
+            {
+                <article class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">@item.Title</h3>
+                            <p class="card-text">@item.Description</p>
+                            <p class="mb-1"><strong>Category:</strong> @item.Category?.Name</p>
+                            <p class="mb-3"><strong>Level:</strong> @item.Level</p>
+                            <a class="btn btn-outline-primary btn-sm" asp-controller="Resources" asp-action="Details" asp-route-id="@item.Id">View Detail</a>
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    }
+</section>

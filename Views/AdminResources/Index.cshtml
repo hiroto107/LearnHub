@@ -1,0 +1,37 @@
+@model IEnumerable<LearnHub.Models.Resource>
+@{
+    ViewData["Title"] = "Admin - Resources";
+}
+
+<h1>Manage Resources</h1>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Resource</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Level</th>
+            <th>Updated</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.Category?.Name</td>
+            <td>@item.Level</td>
+            <td>@item.UpdatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

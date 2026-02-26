@@ -1,0 +1,42 @@
+@model IEnumerable<LearnHub.Models.Bookmark>
+@{
+    ViewData["Title"] = "My Bookmarks";
+}
+
+<h1>My Bookmarks</h1>
+
+@if (!Model.Any())
+{
+    <p>No bookmarks yet. Open a resource and click "Add to My Bookmarks".</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Saved At</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var bookmark in Model)
+        {
+            <tr>
+                <td>@bookmark.Resource?.Title</td>
+                <td>@bookmark.Resource?.Category?.Name</td>
+                <td>@bookmark.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a asp-controller="Resources" asp-action="Details" asp-route-id="@bookmark.ResourceId">Open</a>
+                    <form asp-action="RemoveBookmark" method="post" class="d-inline ms-2">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@bookmark.Id" />
+                        <button class="btn btn-sm btn-outline-danger" type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
